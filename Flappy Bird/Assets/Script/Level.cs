@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class Level : MonoBehaviour
 {
+    private List<Transform> groundList;
     private List<Pipe> pipeList;
     private int pipePassedCount;
     private int pipeSpwaned;
@@ -11,6 +12,10 @@ public class Level : MonoBehaviour
     private float pipeSpwanXPosition = 4;
     private float gapSize;
     private State state;
+    [SerializeField] AudioSource scoreSound;
+    public Transform pipeTr;
+    public Transform ground;
+    public Transform groundUp;
     public enum Difficulty
     {
         Easy,
@@ -31,6 +36,9 @@ public class Level : MonoBehaviour
         state = State.WatingToStart;
         pipeSpwanTimerMax = 1.1f;
         pipeList = new List<Pipe>();
+        groundList = new List<Transform>();
+        SpwanInitialGround(true);
+        SpwanInitialGround(false);
         SetDifficuilty(Difficulty.Easy);
     }
 
@@ -56,6 +64,53 @@ public class Level : MonoBehaviour
         {
             PipeMovement();
             PipeSpwaning();
+            Ground();
+        }
+    }
+
+    private void SpwanInitialGround(bool bottom)
+    {
+        
+        Transform groundTransform;
+        if(bottom)
+        {
+            groundTransform = Instantiate(ground, new Vector3(0, -5f, 0), Quaternion.identity);
+            groundList.Add(groundTransform);
+            groundTransform = Instantiate(ground, new Vector3(5.742f, -5f, 0), Quaternion.identity);
+            groundList.Add(groundTransform);
+            groundTransform = Instantiate(ground, new Vector3(11.484f, -5f, 0), Quaternion.identity);
+            groundList.Add(groundTransform);
+        }
+       else
+       {
+            groundTransform = Instantiate(groundUp, new Vector3(0, 5, 0), Quaternion.Euler(180, 0, 0));
+            groundList.Add(groundTransform);
+            groundTransform = Instantiate(groundUp, new Vector3(5.742f, 5f, 0), Quaternion.Euler(180, 0, 0));
+            groundList.Add(groundTransform);
+            groundTransform = Instantiate(groundUp, new Vector3(11.484f, 5f, 0), Quaternion.Euler(180, 0, 0));
+            groundList.Add(groundTransform);
+       }
+    }
+
+    private void Ground()
+    {
+        foreach(Transform groundTransform in groundList)
+        {
+            groundTransform.position += new Vector3(-1, 0, 0) * 1.2f * Time.deltaTime;
+            if(groundTransform.position.x < -6)
+            {
+                float rightMousePosition = -10;
+                for(int i=0;i<groundList.Count;i++)
+                {
+                   if(groundList[i].position.x > rightMousePosition)
+                   {
+                       rightMousePosition = groundList[i].position.x;
+                   }
+                }
+
+                float groundWeidhtHalf = 5.7f;
+                groundTransform.position = new Vector3(rightMousePosition + groundWeidhtHalf, groundTransform.position.y, groundTransform.position.z);
+            }
         }
     }
 
@@ -82,6 +137,8 @@ public class Level : MonoBehaviour
             if(isPipeRightToBird && (pipe.GetXPosition() <= 0) && pipe.IsBottom())
             {
                 pipePassedCount++;
+                if (scoreSound.isPlaying) scoreSound.Stop();
+                scoreSound.Play();
             }
             if (pipe.GetXPosition() < -3.75f)
             {
@@ -97,20 +154,20 @@ public class Level : MonoBehaviour
         switch (difficulty)
         {
             case Difficulty.Easy:
-                gapSize = 5;
-                pipeSpwanTimerMax = 1.3f;
+                gapSize = 5f;
+                pipeSpwanTimerMax = 4f;
                 break;
             case Difficulty.Medium:
-                gapSize = 4.3f;
-                pipeSpwanTimerMax = 1.15f;
+                gapSize = 4f;
+                pipeSpwanTimerMax = 3f;
                 break;
             case Difficulty.Hard:
-                gapSize = 3.4f;
-                pipeSpwanTimerMax = 1f;
+                gapSize = 3f;
+                pipeSpwanTimerMax = 2f;
                 break;
             case Difficulty.Impossible:
-                gapSize = 2.45f;
-                pipeSpwanTimerMax = 0.9f;
+                gapSize = 2f;
+                pipeSpwanTimerMax = 1f;
                 break;
         }
     }
@@ -133,23 +190,23 @@ public class Level : MonoBehaviour
 
     private void CreatPipe(float height, float xPosition, bool creatBottom)
     {
-        Transform pipe = Instantiate(GameAssets.instance.pipe);
+        Transform pipe = Instantiate(pipeTr);
         if (creatBottom)
         {
-            pipe.position = new Vector2(xPosition, -5);
+            pipe.position = new Vector2(xPosition, -4.012f);
             pipe.rotation = Quaternion.Euler(0, 0, 0);
         }
         else
         {
-            pipe.position = new Vector2(xPosition, 5);
+            pipe.position = new Vector2(xPosition, 5f);
             pipe.rotation = Quaternion.Euler(180, 0, 0);
         }
 
         SpriteRenderer pipeSpriteRenderer = pipe.GetComponent<SpriteRenderer>();
-        pipeSpriteRenderer.size = new Vector2(0.75f, height);
+        pipeSpriteRenderer.size = new Vector2(0.5f, height);
         BoxCollider2D pipeBoxCollider2D = pipe.GetComponent<BoxCollider2D>();
         pipeBoxCollider2D.offset = new Vector2(0, (height * 0.5f));
-        pipeBoxCollider2D.size = new Vector2(0.75f, height);
+        pipeBoxCollider2D.size = new Vector2(0.5f, height);
 
         Pipe pipe1 = new Pipe(pipe , creatBottom);
         pipeList.Add(pipe1);
@@ -173,7 +230,7 @@ public class Level : MonoBehaviour
 
         public void Move()
         {
-            pipeTransform.position += new Vector3(-1, 0, 0) * 2.8f * Time.deltaTime;
+            pipeTransform.position += new Vector3(-1, 0, 0) * 1.2f * Time.deltaTime;
         }
 
         public float GetXPosition()

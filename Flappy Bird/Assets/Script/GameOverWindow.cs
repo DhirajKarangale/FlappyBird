@@ -8,6 +8,7 @@ public class GameOverWindow : MonoBehaviour
     [SerializeField] GameObject gameOverWindow;
     [SerializeField] Text scoreText;
     [SerializeField] Text highScoreText;
+    [SerializeField] AudioSource buttonSound;
 
     private void Awake()
     {
@@ -16,7 +17,7 @@ public class GameOverWindow : MonoBehaviour
 
     private void Start()
     {
-        Bird.instace.onDie += OnDey;
+        Bird.instace.onGameOver += OnDey;
     }
 
     private void OnDey(object sender,System.EventArgs eventArgs)
@@ -28,16 +29,18 @@ public class GameOverWindow : MonoBehaviour
 
     public void RestartButton()
     {
-        // Loader.Load(Loader.Scene.Game);
+        buttonSound.Play();
         SceneManager.LoadScene(1);
     }
 
     public void MainMenuButton()
     {
+        buttonSound.Play();
         SceneManager.LoadScene(0);
     }
     public void QuitButton()
     {
+        buttonSound.Play();
         Application.Quit();
     }
 }
