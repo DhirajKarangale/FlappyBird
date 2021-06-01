@@ -3,17 +3,17 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] AudioSource quitButtonSound;
-    [SerializeField] AudioSource startButtonSound;
+    [SerializeField] AudioSource buttonSound;
+
     public void StartButton()
     {
-        startButtonSound.Play();
+        buttonSound.Play();
         SceneManager.LoadScene(1);
     }
 
     public void QuitButton()
     {
-        quitButtonSound.Play();
+        buttonSound.Play();
         Application.Quit();
     }
 }

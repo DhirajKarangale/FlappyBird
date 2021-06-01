@@ -63,7 +63,7 @@ public class Bird : MonoBehaviour
                 {
                     Jump();
                 }
-                transform.eulerAngles = new Vector3(0, 0, birdRigidBody.velocity.y * 2f);
+                transform.eulerAngles = new Vector3(0, 0, birdRigidBody.velocity.y * 4f);
                 break;
             case State.Dead:
                 break;
@@ -86,7 +86,7 @@ public class Bird : MonoBehaviour
                 isHitPipe = true;
                 if (hitSound.isPlaying) hitSound.Stop();
                 hitSound.Play();
-                transform.eulerAngles = new Vector3(0, 0, birdRigidBody.velocity.y * -900f);
+              //  transform.eulerAngles = new Vector3(0, 0, birdRigidBody.velocity.y * -1700f);
                 if (onDie != null) onDie(this, EventArgs.Empty);
                 scoreTextObject.SetActive(false);
                 pipeCollision = 1;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class Level : MonoBehaviour
 {
     private List<Transform> groundList;
+    private List<Transform> groundListUp;
     private List<Pipe> pipeList;
     private int pipePassedCount;
     private int pipeSpwaned;
@@ -37,8 +38,9 @@ public class Level : MonoBehaviour
         pipeSpwanTimerMax = 1.1f;
         pipeList = new List<Pipe>();
         groundList = new List<Transform>();
+        groundListUp = new List<Transform>();
         SpwanInitialGround(true);
-        SpwanInitialGround(false);
+      //  SpwanInitialGround(false);
         SetDifficuilty(Difficulty.Easy);
     }
 
@@ -65,6 +67,7 @@ public class Level : MonoBehaviour
             PipeMovement();
             PipeSpwaning();
             Ground();
+            GroundUp();
         }
     }
 
@@ -72,24 +75,18 @@ public class Level : MonoBehaviour
     {
         
         Transform groundTransform;
-        if(bottom)
-        {
-            groundTransform = Instantiate(ground, new Vector3(0, -5f, 0), Quaternion.identity);
-            groundList.Add(groundTransform);
-            groundTransform = Instantiate(ground, new Vector3(5.742f, -5f, 0), Quaternion.identity);
-            groundList.Add(groundTransform);
-            groundTransform = Instantiate(ground, new Vector3(11.484f, -5f, 0), Quaternion.identity);
-            groundList.Add(groundTransform);
-        }
-       else
-       {
-            groundTransform = Instantiate(groundUp, new Vector3(0, 5, 0), Quaternion.Euler(180, 0, 0));
-            groundList.Add(groundTransform);
-            groundTransform = Instantiate(groundUp, new Vector3(5.742f, 5f, 0), Quaternion.Euler(180, 0, 0));
-            groundList.Add(groundTransform);
-            groundTransform = Instantiate(groundUp, new Vector3(11.484f, 5f, 0), Quaternion.Euler(180, 0, 0));
-            groundList.Add(groundTransform);
-       }
+        groundTransform = Instantiate(ground, new Vector3(0, -5f, 0), Quaternion.identity);
+        groundList.Add(groundTransform);
+        groundTransform = Instantiate(ground, new Vector3(5.742f, -5f, 0), Quaternion.identity);
+        groundList.Add(groundTransform);
+        groundTransform = Instantiate(ground, new Vector3(11.484f, -5f, 0), Quaternion.identity);
+        groundList.Add(groundTransform);
+        groundTransform = Instantiate(groundUp, new Vector3(0, 5, 0), Quaternion.Euler(180, 0, 0));
+        groundListUp.Add(groundTransform);
+        groundTransform = Instantiate(groundUp, new Vector3(5.742f, 5f, 0), Quaternion.Euler(180, 0, 0));
+        groundListUp.Add(groundTransform);
+        groundTransform = Instantiate(groundUp, new Vector3(11.484f, 5f, 0), Quaternion.Euler(180, 0, 0));
+        groundListUp.Add(groundTransform);
     }
 
     private void Ground()
@@ -113,6 +110,31 @@ public class Level : MonoBehaviour
             }
         }
     }
+
+
+    private void GroundUp()
+    {
+        foreach (Transform groundTransform in groundListUp)
+        {
+            groundTransform.position += new Vector3(-1, 0, 0) * 1.2f * Time.deltaTime;
+            if (groundTransform.position.x < -6)
+            {
+                float rightMousePosition = -10;
+                for (int i = 0; i < groundListUp.Count; i++)
+                {
+                    if (groundListUp[i].position.x > rightMousePosition)
+                    {
+                        rightMousePosition = groundListUp[i].position.x;
+                    }
+                }
+
+                float groundWeidhtHalf = 5.7f;
+                groundTransform.position = new Vector3(rightMousePosition + groundWeidhtHalf, groundTransform.position.y, groundTransform.position.z);
+            }
+        }
+    }
+
+
 
     private void PipeSpwaning()
     {
@@ -174,9 +196,9 @@ public class Level : MonoBehaviour
 
     private Difficulty GetDifficulty()
     {
-        if (pipeSpwaned >= 35) return Difficulty.Impossible;
-        if (pipeSpwaned >= 24) return Difficulty.Hard;
-        if (pipeSpwaned >= 10) return Difficulty.Medium;
+        if (pipeSpwaned >= 27) return Difficulty.Impossible;
+        if (pipeSpwaned >= 15) return Difficulty.Hard;
+        if (pipeSpwaned >= 5) return Difficulty.Medium;
         else return Difficulty.Easy;
     }
 
