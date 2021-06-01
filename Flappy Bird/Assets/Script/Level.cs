@@ -4,11 +4,13 @@ using System.Collections.Generic;
 public class Level : MonoBehaviour
 {
     private List<Pipe> pipeList;
+    private int pipePassedCount;
     private int pipeSpwaned;
     private float pipeSpwanTimer;
     private float pipeSpwanTimerMax;
-    private float pipeSpwanXPosition = 3;
+    private float pipeSpwanXPosition = 4;
     private float gapSize;
+    private State state;
     public enum Difficulty
     {
         Easy,
@@ -17,17 +19,44 @@ public class Level : MonoBehaviour
         Impossible,
     }
 
+    private enum State
+    {
+        WatingToStart,
+        Playing,
+        Dead,
+    }
+
     private void Awake()
     {
+        state = State.WatingToStart;
         pipeSpwanTimerMax = 1.1f;
         pipeList = new List<Pipe>();
         SetDifficuilty(Difficulty.Easy);
     }
 
+    private void Start()
+    {
+        Bird.instace.onDie += BirdDye;
+        Bird.instace.onStart += OnStart;
+    }
+
+    public void BirdDye(object sender,System.EventArgs eventArgs)
+    {
+        state = State.Dead;
+    }
+
+    public void OnStart(object sender, System.EventArgs eventArgs)
+    {
+        state = State.Playing;
+    }
+
     private void Update()
     {
-        PipeMovement();
-        PipeSpwaning();
+        if(state == State.Playing)
+        {
+            PipeMovement();
+            PipeSpwaning();
+        }
     }
 
     private void PipeSpwaning()
@@ -36,8 +65,8 @@ public class Level : MonoBehaviour
         if(pipeSpwanTimer<=0)
         {
             pipeSpwanTimer += pipeSpwanTimerMax;
-            float minHeight = gapSize * 0.5f + 2;
-            float maxHeight = 10 - (gapSize * 0.5f) - 2;
+            float minHeight = gapSize * 0.5f + 0;
+            float maxHeight = 10 - (gapSize * 0.5f) -1;
             float height = Random.Range(minHeight, maxHeight);
             PipeGap(height, gapSize, pipeSpwanXPosition);
         }
@@ -48,7 +77,12 @@ public class Level : MonoBehaviour
         for(int i=0;i<pipeList.Count;i++)
         {
             Pipe pipe = pipeList[i];
+            bool isPipeRightToBird = pipe.GetXPosition() > 0;
             pipe.Move();
+            if(isPipeRightToBird && (pipe.GetXPosition() <= 0) && pipe.IsBottom())
+            {
+                pipePassedCount++;
+            }
             if (pipe.GetXPosition() < -3.75f)
             {
                 pipe.DestroySelf();
@@ -83,8 +117,8 @@ public class Level : MonoBehaviour
 
     private Difficulty GetDifficulty()
     {
-        if (pipeSpwaned >= 40) return Difficulty.Impossible;
-        if (pipeSpwaned >= 25) return Difficulty.Hard;
+        if (pipeSpwaned >= 35) return Difficulty.Impossible;
+        if (pipeSpwaned >= 24) return Difficulty.Hard;
         if (pipeSpwaned >= 10) return Difficulty.Medium;
         else return Difficulty.Easy;
     }
@@ -117,17 +151,24 @@ public class Level : MonoBehaviour
         pipeBoxCollider2D.offset = new Vector2(0, (height * 0.5f));
         pipeBoxCollider2D.size = new Vector2(0.75f, height);
 
-        Pipe pipe1 = new Pipe(pipe);
+        Pipe pipe1 = new Pipe(pipe , creatBottom);
         pipeList.Add(pipe1);
+    }
+
+    public int GetPipePassed()
+    {
+        return pipePassedCount;
     }
 
     private class Pipe
     {
         private Transform pipeTransform;
+        private bool isBottom;
 
-        public Pipe(Transform pipeTransform)
+        public Pipe(Transform pipeTransform,bool isBottom)
         {
             this.pipeTransform = pipeTransform;
+            this.isBottom = isBottom;
         }
 
         public void Move()
@@ -138,6 +179,11 @@ public class Level : MonoBehaviour
         public float GetXPosition()
         {
             return pipeTransform.position.x;
+        }
+
+        public bool IsBottom()
+        {
+            return isBottom;
         }
 
         public void DestroySelf()
