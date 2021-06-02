@@ -77,15 +77,15 @@ public class Level : MonoBehaviour
         Transform groundTransform;
         groundTransform = Instantiate(ground, new Vector3(0, -5f, 0), Quaternion.identity);
         groundList.Add(groundTransform);
-        groundTransform = Instantiate(ground, new Vector3(5.742f, -5f, 0), Quaternion.identity);
+        groundTransform = Instantiate(ground, new Vector3(5.293f, -5f, 0), Quaternion.identity);
         groundList.Add(groundTransform);
-        groundTransform = Instantiate(ground, new Vector3(11.484f, -5f, 0), Quaternion.identity);
+        groundTransform = Instantiate(ground, new Vector3(10.586f, -5f, 0), Quaternion.identity);
         groundList.Add(groundTransform);
         groundTransform = Instantiate(groundUp, new Vector3(0, 5, 0), Quaternion.Euler(180, 0, 0));
         groundListUp.Add(groundTransform);
-        groundTransform = Instantiate(groundUp, new Vector3(5.742f, 5f, 0), Quaternion.Euler(180, 0, 0));
+        groundTransform = Instantiate(groundUp, new Vector3(5.293f, 5f, 0), Quaternion.Euler(180, 0, 0));
         groundListUp.Add(groundTransform);
-        groundTransform = Instantiate(groundUp, new Vector3(11.484f, 5f, 0), Quaternion.Euler(180, 0, 0));
+        groundTransform = Instantiate(groundUp, new Vector3(10.586f, 5f, 0), Quaternion.Euler(180, 0, 0));
         groundListUp.Add(groundTransform);
     }
 
@@ -105,7 +105,7 @@ public class Level : MonoBehaviour
                    }
                 }
 
-                float groundWeidhtHalf = 5.7f;
+                float groundWeidhtHalf = 5.293f;
                 groundTransform.position = new Vector3(rightMousePosition + groundWeidhtHalf, groundTransform.position.y, groundTransform.position.z);
             }
         }
@@ -128,7 +128,7 @@ public class Level : MonoBehaviour
                     }
                 }
 
-                float groundWeidhtHalf = 5.7f;
+                float groundWeidhtHalf = 5.293f;
                 groundTransform.position = new Vector3(rightMousePosition + groundWeidhtHalf, groundTransform.position.y, groundTransform.position.z);
             }
         }

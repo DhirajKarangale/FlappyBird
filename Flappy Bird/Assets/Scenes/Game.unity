@@ -915,7 +915,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.32034373, y: 0.8237579}
   m_AnchorMax: {x: 0.65853125, y: 0.91956055}
-  m_AnchoredPosition: {x: 0.030899048, y: 0.35107422}
+  m_AnchoredPosition: {x: 0.030883789, y: 0.35107422}
   m_SizeDelta: {x: -0.28919983, y: 0.45880127}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &341457846
@@ -1791,7 +1791,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.33365628, y: 0.44580272}
   m_AnchorMax: {x: 0.66400003, y: 0.52283406}
-  m_AnchoredPosition: {x: 1.5, y: 0.5370331}
+  m_AnchoredPosition: {x: 1.5, y: 0.53704834}
   m_SizeDelta: {x: 2.8099976, y: -2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1353551732
@@ -1922,7 +1922,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.6971482, y: 0.605547}
   m_AnchorMax: {x: 0.93600005, y: 0.66130483}
-  m_AnchoredPosition: {x: -1, y: -1.4400024}
+  m_AnchoredPosition: {x: -1, y: -1.4399414}
   m_SizeDelta: {x: -4.0960083, y: -0.6287842}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1470882830
@@ -2512,7 +2512,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1.3
+  m_GravityScale: 1.1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -2595,7 +2595,7 @@ Transform:
   m_GameObject: {fileID: 2082908655}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.86, z: 0}
-  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -2616,6 +2616,7 @@ MonoBehaviour:
   scoreTextObject: {fileID: 341457844}
   birdJumpSound: {fileID: 220848990}
   hitSound: {fileID: 2073588046}
+  mainCamera: {fileID: 519420031}
 --- !u!95 &2082908661
 Animator:
   serializedVersion: 3

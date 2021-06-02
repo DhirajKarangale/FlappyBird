@@ -9,7 +9,7 @@ public class Bird : MonoBehaviour
     [SerializeField] AudioSource hitSound;
     private Rigidbody2D birdRigidBody;
     private Animator animator;
-    private const int jumpForce = 6;
+    private const float jumpForce = 4.5f;
     public event EventHandler onDie;
     public event EventHandler onStart;
     public event EventHandler onGameOver;
@@ -17,6 +17,11 @@ public class Bird : MonoBehaviour
     private State state;
     private bool isHitPipe;
     private int pipeCollision;
+
+    [Header("Camera Shake")]
+    private Vector3 cameraInitialPosition;
+    private float shakeMagnetude = 0.06f, shakeTime = 0.2f;
+    [SerializeField] Camera mainCamera;
 
     private enum State
     {
@@ -83,6 +88,7 @@ public class Bird : MonoBehaviour
         {
             if(pipeCollision == 0)
             {
+                ShakeIt();
                 isHitPipe = true;
                 if (hitSound.isPlaying) hitSound.Stop();
                 hitSound.Play();
@@ -92,12 +98,12 @@ public class Bird : MonoBehaviour
                 pipeCollision = 1;
                 Invoke("GameOver", 1f);
             }
-            else if(pipeCollision == 1)
+           /* else if(pipeCollision == 1)
             {
                 if (hitSound.isPlaying) hitSound.Stop();
                 hitSound.Play();
                 GameOver();
-            }
+            }*/
             else
             {
                 GameOver();
@@ -105,6 +111,7 @@ public class Bird : MonoBehaviour
         }
        else if(collision.gameObject.tag == "Ground")
        {
+            ShakeIt();
             isHitPipe = true;
             if (hitSound.isPlaying) hitSound.Stop();
             hitSound.Play();
@@ -117,5 +124,30 @@ public class Bird : MonoBehaviour
     {
         animator.enabled = false;
         if (onGameOver != null) onGameOver(this, EventArgs.Empty);
+    }
+
+
+
+    private void ShakeIt()
+    {
+        cameraInitialPosition = mainCamera.transform.position;
+        InvokeRepeating("StartCameraShaking", 0f, 0.005f);
+        Invoke("StopCameraShaking", shakeTime);
+    }
+
+    private void StartCameraShaking()
+    {
+        float cameraShakingOffsetX = UnityEngine.Random.value * shakeMagnetude * 2 - shakeMagnetude;
+        float cameraShakingOffsetY = UnityEngine.Random.value * shakeMagnetude * 2 - shakeMagnetude;
+        Vector3 cameraIntermadiatePosition = mainCamera.transform.position;
+        cameraIntermadiatePosition.x += cameraShakingOffsetX;
+        cameraIntermadiatePosition.y += cameraShakingOffsetY;
+        mainCamera.transform.position = cameraIntermadiatePosition;
+    }
+
+    private void StopCameraShaking()
+    {
+        CancelInvoke("StartCameraShaking");
+        mainCamera.transform.position = cameraInitialPosition;
     }
 }
