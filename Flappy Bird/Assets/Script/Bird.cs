@@ -1,12 +1,19 @@
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
+
 
 public class Bird : MonoBehaviour
 {
     [SerializeField] GameObject WaitToStartPanel;
+    [SerializeField] GameObject pauseButtonObject;
     [SerializeField] GameObject scoreTextObject;
+    [SerializeField] GameObject pausePannel;
     [SerializeField] AudioSource birdJumpSound;
     [SerializeField] AudioSource hitSound;
+    [SerializeField] AudioSource bgSound;
+    [SerializeField] AudioSource gameOverSound;
+    [SerializeField] AudioSource buttonSound;
     private Rigidbody2D birdRigidBody;
     private Animator animator;
     private const float jumpForce = 4.5f;
@@ -15,7 +22,7 @@ public class Bird : MonoBehaviour
     public event EventHandler onGameOver;
     public static Bird instace;
     private State state;
-    private bool isHitPipe;
+    private bool isHitPipe,isPause;
     private int pipeCollision;
 
     [Header("Camera Shake")]
@@ -46,6 +53,8 @@ public class Bird : MonoBehaviour
         isHitPipe = false;
         animator.enabled = true;
         pipeCollision = 0;
+        bgSound.Play();
+        pauseButtonObject.SetActive(false);
     }
 
     private void Update()
@@ -58,19 +67,29 @@ public class Bird : MonoBehaviour
                 {
                     state = State.Playing;
                     WaitToStartPanel.SetActive(false);
+                    ResumeButton();
                     birdRigidBody.bodyType = RigidbodyType2D.Dynamic;
                     Jump();
                     if (onStart != null) onStart(this, EventArgs.Empty);
                 }
                 break;
             case State.Playing:
+                if (Input.GetKey(KeyCode.Escape))
+                {
+                    if (isPause) ResumeButton();
+                    else PauseButton();
+                }
+                pauseButtonObject.SetActive(true);
                 if (Input.GetMouseButtonDown(0) && !isHitPipe)
                 {
+                    if (EventSystem.current.IsPointerOverGameObject())
+                        return;
                     Jump();
                 }
-                transform.eulerAngles = new Vector3(0, 0, birdRigidBody.velocity.y * 4f);
+                transform.eulerAngles = new Vector3(0, 0, birdRigidBody.velocity.y * 5f);
                 break;
             case State.Dead:
+                pauseButtonObject.SetActive(false);
                 break;
         }
     }
@@ -88,22 +107,26 @@ public class Bird : MonoBehaviour
         {
             if(pipeCollision == 0)
             {
+                state = State.Dead;
+                if (gameOverSound.isPlaying) gameOverSound.Stop();
+                gameOverSound.Play();
+                bgSound.Stop();
                 ShakeIt();
                 isHitPipe = true;
                 if (hitSound.isPlaying) hitSound.Stop();
                 hitSound.Play();
-              //  transform.eulerAngles = new Vector3(0, 0, birdRigidBody.velocity.y * -1700f);
                 if (onDie != null) onDie(this, EventArgs.Empty);
                 scoreTextObject.SetActive(false);
                 pipeCollision = 1;
                 Invoke("GameOver", 1f);
             }
-           /* else if(pipeCollision == 1)
+            else if (pipeCollision == 1)
             {
+                pipeCollision = 2;
                 if (hitSound.isPlaying) hitSound.Stop();
                 hitSound.Play();
                 GameOver();
-            }*/
+            }
             else
             {
                 GameOver();
@@ -111,10 +134,20 @@ public class Bird : MonoBehaviour
         }
        else if(collision.gameObject.tag == "Ground")
        {
-            ShakeIt();
+            state = State.Dead;
+            if (pipeCollision == 0)
+            {
+                if (gameOverSound.isPlaying) gameOverSound.Stop();
+                gameOverSound.Play();
+                ShakeIt();
+            }
+            bgSound.Stop();
             isHitPipe = true;
-            if (hitSound.isPlaying) hitSound.Stop();
-            hitSound.Play();
+            if(pipeCollision != 2)
+            {
+                if (hitSound.isPlaying) hitSound.Stop();
+                hitSound.Play();
+            }
             GameOver();
             if (onDie != null) onDie(this, EventArgs.Empty);
        }
@@ -149,5 +182,23 @@ public class Bird : MonoBehaviour
     {
         CancelInvoke("StartCameraShaking");
         mainCamera.transform.position = cameraInitialPosition;
+    }
+
+    public void PauseButton()
+    {
+        buttonSound.Play();
+        scoreTextObject.SetActive(false);
+        isPause = true;
+        Time.timeScale = 0;
+        pausePannel.SetActive(true);
+    }
+
+    public void ResumeButton()
+    {
+        buttonSound.Play();
+        scoreTextObject.SetActive(true);
+        isPause = false;
+        Time.timeScale = 1;
+        pausePannel.SetActive(false);
     }
 }

@@ -39,8 +39,7 @@ public class Level : MonoBehaviour
         pipeList = new List<Pipe>();
         groundList = new List<Transform>();
         groundListUp = new List<Transform>();
-        SpwanInitialGround(true);
-      //  SpwanInitialGround(false);
+        SpwanInitialGround();
         SetDifficuilty(Difficulty.Easy);
     }
 
@@ -71,7 +70,7 @@ public class Level : MonoBehaviour
         }
     }
 
-    private void SpwanInitialGround(bool bottom)
+    private void SpwanInitialGround()
     {
         
         Transform groundTransform;
@@ -184,12 +183,12 @@ public class Level : MonoBehaviour
                 pipeSpwanTimerMax = 3f;
                 break;
             case Difficulty.Hard:
-                gapSize = 3f;
-                pipeSpwanTimerMax = 2f;
+                gapSize = 3.5f;
+                pipeSpwanTimerMax = 2.5f;
                 break;
             case Difficulty.Impossible:
-                gapSize = 2f;
-                pipeSpwanTimerMax = 1f;
+                gapSize = 2.8f;
+                pipeSpwanTimerMax = 1.8f;
                 break;
         }
     }
