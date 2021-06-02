@@ -1103,3 +1103,38 @@ System memory in use after: 66.5 MB.
 Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 4005.
 Total: 7.702100 ms (FindLiveObjects: 1.090600 ms CreateObjectMapping: 0.425500 ms MarkObjects: 5.896400 ms  DeleteObjects: 0.284900 ms)
 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.039724 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 2.47 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  8.551 seconds
+Platform modules already initialized, skipping
+Switching build target platform(19) subTarget(0) extendedPlatform(0) -> platform(13) subTarget(537395200) extendedPlatform(0)
+Refreshing native plugins compatible for Editor in 1.86 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3370 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 132.7 MB.
+System memory in use after: 132.9 MB.
+
+Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 4009.
+Total: 6.651500 ms (FindLiveObjects: 0.808900 ms CreateObjectMapping: 0.538500 ms MarkObjects: 5.005800 ms  DeleteObjects: 0.295500 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:graphics/normal-map-encoding: 01000000000000000000000000000000 -> 02000000000000000000000000000000
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 35.07 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 15 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 66.4 MB.
+System memory in use after: 66.5 MB.
+
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 4009.
+Total: 10.584800 ms (FindLiveObjects: 0.686500 ms CreateObjectMapping: 0.553400 ms MarkObjects: 9.011100 ms  DeleteObjects: 0.330000 ms)
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
