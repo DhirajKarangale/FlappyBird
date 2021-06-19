@@ -235,9 +235,9 @@ public class Level : MonoBehaviour
 
             SpriteRenderer pipeSpriteRendererUP = pipeUP.GetComponent<SpriteRenderer>();
             pipeSpriteRendererUP.size = new Vector2(1.2f, height);
-            /*BoxCollider2D pipeBoxCollider2DUP = pipeUP.GetComponent<BoxCollider2D>();
-            pipeBoxCollider2DUP.offset = new Vector2(0.1150972f, (height * 0.5f));
-            pipeBoxCollider2DUP.size = new Vector2(0.1186016f, height);*/
+            BoxCollider2D pipeBoxCollider2DUP = pipeUP.GetComponent<BoxCollider2D>();
+            pipeBoxCollider2DUP.offset = new Vector2(0.1435127f, (height * 0.3f));
+            pipeBoxCollider2DUP.size = new Vector2(0.128284f, height);
 
             Pipe pipe2 = new Pipe(pipeUP, creatBottom);
             pipeList.Add(pipe2);

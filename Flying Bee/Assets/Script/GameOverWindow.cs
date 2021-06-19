@@ -9,12 +9,11 @@ public class GameOverWindow : MonoBehaviour
     [SerializeField] Text scoreText;
     [SerializeField] Text highScoreText;
     [SerializeField] AudioSource buttonSound;
-  //  private bool isShowAd;
+    private bool isShowAd;
 
     private void Awake()
     {
-      //  AdManager.instance.RequestInterstitial();
-      //  isShowAd = true;
+        isShowAd = true;
         gameOverWindow.SetActive(false);
     }
 
@@ -28,11 +27,11 @@ public class GameOverWindow : MonoBehaviour
         scoreText.text = level.GetPipePassed().ToString();
         highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
         gameOverWindow.SetActive(true);
-    /*    if (isShowAd && (Random.Range(0, 5) == 1))
+        if (isShowAd && (Random.Range(0, 5) == 1))
         {
-            Invoke("ShowInterstitialAd", 2);
+            ADManager.instance.ShowInterstitialAd();
             isShowAd = false;
-        } */
+        }
     }
 
  /*   private void ShowInterstitialAd()

@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] AudioSource buttonSound;
+    [SerializeField] AudioSource startButtonSound;
+    [SerializeField] GameObject bird;
     [SerializeField] GameObject quitPanel;
     [SerializeField] GameObject startbutton;
     [SerializeField] GameObject quitbutton;
@@ -20,8 +22,9 @@ public class MainMenu : MonoBehaviour
 
     public void StartButton()
     {
-        buttonSound.Play();
-        SceneManager.LoadScene(1);
+        startButtonSound.Play();
+        bird.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 245);
+        Invoke("LoadGame", 0.8f);
     }
 
     public void QuitButton()
@@ -46,5 +49,15 @@ public class MainMenu : MonoBehaviour
         quitPanel.SetActive(false);
         quitbutton.SetActive(true);
         startbutton.SetActive(true);
+    }
+
+    public void MoreGamesButton()
+    {
+        Application.OpenURL("https://play.google.com/store/apps/developer?id=DK_Software");
+    }
+
+    private void LoadGame()
+    {
+        SceneManager.LoadScene(1);
     }
 }

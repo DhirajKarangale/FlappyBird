@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8943575626098606899}
   - component: {fileID: 8943575626098606898}
   - component: {fileID: 7062877275257027728}
+  - component: {fileID: 5640178809335837396}
   m_Layer: 0
   m_Name: Pipe UP
   m_TagString: Pipe
@@ -138,3 +139,29 @@ PolygonCollider2D:
       - {x: 0.53999996, y: 0}
       - {x: 0.53999996, y: 0.19}
       - {x: 0.51, y: 0.42}
+--- !u!61 &5640178809335837396
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8943575626098606892}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.14351273, y: 1.7312846}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 1.08, y: 2.39}
+    newSize: {x: 1.2, y: 3.44}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 1
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.12828404, y: 3.3719292}
+  m_EdgeRadius: 0
