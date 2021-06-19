@@ -15,6 +15,7 @@ public class Level : MonoBehaviour
     private State state;
     [SerializeField] AudioSource scoreSound;
     public Transform pipeTr;
+    public Transform pipeUPObj;
     public Transform ground;
     public Transform groundUp;
     public enum Difficulty
@@ -80,11 +81,11 @@ public class Level : MonoBehaviour
         groundList.Add(groundTransform);
         groundTransform = Instantiate(ground, new Vector3(10.586f, -5f, 0), Quaternion.identity);
         groundList.Add(groundTransform);
-        groundTransform = Instantiate(groundUp, new Vector3(0, 5, 0), Quaternion.Euler(0, 0, 0));
+        groundTransform = Instantiate(groundUp, new Vector3(0, 4.8f, 0), Quaternion.Euler(180, 0, 0));
         groundListUp.Add(groundTransform);
-        groundTransform = Instantiate(groundUp, new Vector3(5.293f, 5f, 0), Quaternion.Euler(0, 0, 0));
+        groundTransform = Instantiate(groundUp, new Vector3(5.293f, 4.8f, 0), Quaternion.Euler(180, 0, 0));
         groundListUp.Add(groundTransform);
-        groundTransform = Instantiate(groundUp, new Vector3(10.586f, 5f, 0), Quaternion.Euler(0, 0, 0));
+        groundTransform = Instantiate(groundUp, new Vector3(10.586f, 4.8f, 0), Quaternion.Euler(180, 0, 0));
         groundListUp.Add(groundTransform);
     }
 
@@ -175,19 +176,19 @@ public class Level : MonoBehaviour
         switch (difficulty)
         {
             case Difficulty.Easy:
-                gapSize = 5f;
+                gapSize = 4.65f;
                 pipeSpwanTimerMax = 4f;
                 break;
             case Difficulty.Medium:
-                gapSize = 4f;
+                gapSize = 3.65f;
                 pipeSpwanTimerMax = 3f;
                 break;
             case Difficulty.Hard:
-                gapSize = 3.5f;
+                gapSize = 3.15f;
                 pipeSpwanTimerMax = 2.5f;
                 break;
             case Difficulty.Impossible:
-                gapSize = 2.8f;
+                gapSize = 2.3f;
                 pipeSpwanTimerMax = 1.8f;
                 break;
         }
@@ -203,7 +204,7 @@ public class Level : MonoBehaviour
 
     private void PipeGap(float gapY,float gapSize,float xPosition)
     {
-        CreatPipe(gapY - gapSize * 0.5f, xPosition,true);
+        CreatPipe(gapY - gapSize * 0.5f, xPosition, true);
         CreatPipe(5 * 2 - gapY - gapSize * 0.5f, xPosition, false);
         pipeSpwaned++;
         SetDifficuilty(GetDifficulty());
@@ -211,26 +212,36 @@ public class Level : MonoBehaviour
 
     private void CreatPipe(float height, float xPosition, bool creatBottom)
     {
-        Transform pipe = Instantiate(pipeTr);
         if (creatBottom)
         {
+            Transform pipe = Instantiate(pipeTr);
             pipe.position = new Vector2(xPosition, -5f);
             pipe.rotation = Quaternion.Euler(0, 0, 0);
+
+            SpriteRenderer pipeSpriteRenderer = pipe.GetComponent<SpriteRenderer>();
+            pipeSpriteRenderer.size = new Vector2(1.15f, height);
+            BoxCollider2D pipeBoxCollider2D = pipe.GetComponent<BoxCollider2D>();
+            pipeBoxCollider2D.offset = new Vector2(0, (height * 0.5f));
+            pipeBoxCollider2D.size = new Vector2(1.15f, height);
+
+            Pipe pipe1 = new Pipe(pipe, creatBottom);
+            pipeList.Add(pipe1);
         }
         else
         {
-            pipe.position = new Vector2(xPosition, 5f);
-            pipe.rotation = Quaternion.Euler(180, 0, 0);
+            Transform pipeUP = Instantiate(pipeUPObj);
+            pipeUP.position = new Vector2(xPosition, 5f);
+            pipeUP.rotation = Quaternion.Euler(180, 0, 0);
+
+            SpriteRenderer pipeSpriteRendererUP = pipeUP.GetComponent<SpriteRenderer>();
+            pipeSpriteRendererUP.size = new Vector2(1.2f, height);
+            /*BoxCollider2D pipeBoxCollider2DUP = pipeUP.GetComponent<BoxCollider2D>();
+            pipeBoxCollider2DUP.offset = new Vector2(0.1150972f, (height * 0.5f));
+            pipeBoxCollider2DUP.size = new Vector2(0.1186016f, height);*/
+
+            Pipe pipe2 = new Pipe(pipeUP, creatBottom);
+            pipeList.Add(pipe2);
         }
-
-        SpriteRenderer pipeSpriteRenderer = pipe.GetComponent<SpriteRenderer>();
-        pipeSpriteRenderer.size = new Vector2(1.15f, height);
-        BoxCollider2D pipeBoxCollider2D = pipe.GetComponent<BoxCollider2D>();
-        pipeBoxCollider2D.offset = new Vector2(0, (height * 0.5f));
-        pipeBoxCollider2D.size = new Vector2(1.15f, height);
-
-        Pipe pipe1 = new Pipe(pipe , creatBottom);
-        pipeList.Add(pipe1);
     }
 
     public int GetPipePassed()
