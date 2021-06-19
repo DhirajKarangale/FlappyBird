@@ -24,7 +24,7 @@ public class MainMenu : MonoBehaviour
     {
         startButtonSound.Play();
         bird.GetComponent<Rigidbody2D>().AddForce(Vector2.right * 245);
-        Invoke("LoadGame", 0.8f);
+        Invoke("LoadGame", 0.7f);
     }
 
     public void QuitButton()
