@@ -27,17 +27,17 @@ public class GameOverWindow : MonoBehaviour
         scoreText.text = level.GetPipePassed().ToString();
         highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
         gameOverWindow.SetActive(true);
-        if (isShowAd && (Random.Range(0, 5) == 1))
+        if (isShowAd && (Random.Range(0, 5) == 4))
         {
-            ADManager.instance.ShowInterstitialAd();
+            Invoke("ShowInterstitialAd", 1.5f);
             isShowAd = false;
         }
     }
 
- /*   private void ShowInterstitialAd()
+    private void ShowInterstitialAd()
     {
-        AdManager.instance.ShowInterstitialAd();
-    }  */
+        ADManager.instance.ShowInterstitialAd();
+    }
 
     public void RestartButton()
     {

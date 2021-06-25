@@ -42,6 +42,7 @@ public class Level : MonoBehaviour
         groundListUp = new List<Transform>();
         SpwanInitialGround();
         SetDifficuilty(Difficulty.Easy);
+        ADManager.instance.HideBanner();
     }
 
     private void Start()
@@ -176,19 +177,19 @@ public class Level : MonoBehaviour
         switch (difficulty)
         {
             case Difficulty.Easy:
-                gapSize = 4.65f;
+                gapSize = 4f;
                 pipeSpwanTimerMax = 4f;
                 break;
             case Difficulty.Medium:
-                gapSize = 3.65f;
+                gapSize = 3f;
                 pipeSpwanTimerMax = 3f;
                 break;
             case Difficulty.Hard:
-                gapSize = 3.15f;
+                gapSize = 2.5f;
                 pipeSpwanTimerMax = 2.5f;
                 break;
             case Difficulty.Impossible:
-                gapSize = 2.3f;
+                gapSize = 1.8f;
                 pipeSpwanTimerMax = 1.8f;
                 break;
         }
@@ -196,8 +197,8 @@ public class Level : MonoBehaviour
 
     private Difficulty GetDifficulty()
     {
-        if (pipeSpwaned >= 27) return Difficulty.Impossible;
-        if (pipeSpwaned >= 15) return Difficulty.Hard;
+        if (pipeSpwaned >= 21) return Difficulty.Impossible;
+        if (pipeSpwaned >= 12) return Difficulty.Hard;
         if (pipeSpwaned >= 5) return Difficulty.Medium;
         else return Difficulty.Easy;
     }
@@ -221,8 +222,8 @@ public class Level : MonoBehaviour
             SpriteRenderer pipeSpriteRenderer = pipe.GetComponent<SpriteRenderer>();
             pipeSpriteRenderer.size = new Vector2(1.15f, height);
             BoxCollider2D pipeBoxCollider2D = pipe.GetComponent<BoxCollider2D>();
-            pipeBoxCollider2D.offset = new Vector2(0, (height * 0.5f));
-            pipeBoxCollider2D.size = new Vector2(1.15f, height);
+            pipeBoxCollider2D.offset = new Vector2(0, (height * 0.451928f));
+            pipeBoxCollider2D.size = new Vector2(0.7392125f, height*0.903857f);
 
             Pipe pipe1 = new Pipe(pipe, creatBottom);
             pipeList.Add(pipe1);
