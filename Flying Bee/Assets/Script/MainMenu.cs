@@ -6,17 +6,25 @@ public class MainMenu : MonoBehaviour
     [SerializeField] AudioSource buttonSound;
     [SerializeField] AudioSource startButtonSound;
     [SerializeField] GameObject bird;
+    [SerializeField] GameObject mainPanel;
     [SerializeField] GameObject quitPanel;
+    [SerializeField] GameObject aboutPanel;
     [SerializeField] GameObject startbutton;
     [SerializeField] GameObject quitbutton;
-    private bool isQuitPanel;
+    [SerializeField] GameObject aboutbutton;
+    private bool isQuitPanel,isAboutPanel;
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (!isAboutPanel && Input.GetKeyDown(KeyCode.Escape))
         {
             if (isQuitPanel) NoButton();
             else QuitPanel();
+        }
+
+        if(isAboutPanel && Input.GetKeyDown(KeyCode.Escape))
+        {
+            CloseAboutButton();
         }
     }
 
@@ -40,6 +48,7 @@ public class MainMenu : MonoBehaviour
         quitPanel.SetActive(true);
         quitbutton.SetActive(false);
         startbutton.SetActive(false);
+        aboutbutton.SetActive(false);
     }
 
     public void NoButton()
@@ -49,6 +58,7 @@ public class MainMenu : MonoBehaviour
         quitPanel.SetActive(false);
         quitbutton.SetActive(true);
         startbutton.SetActive(true);
+        aboutbutton.SetActive(true);
     }
 
     public void MoreGamesButton()
@@ -59,5 +69,29 @@ public class MainMenu : MonoBehaviour
     private void LoadGame()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void AboutButton()
+    {
+        isAboutPanel = true;
+        mainPanel.SetActive(false);
+        aboutPanel.SetActive(true);
+    }
+
+    public void LinkedInButton()
+    {
+        Application.OpenURL("https://www.linkedin.com/in/dhiraj-karangale-464ab91bb");
+    }
+
+    public void YoutubeButton()
+    {
+        Application.OpenURL("https://www.youtube.com/channel/UC_Dnn-QqlnrdYpKXycyzJDA");
+    }
+
+    public void CloseAboutButton()
+    {
+        isAboutPanel = false;
+        aboutPanel.SetActive(false);
+        mainPanel.SetActive(true);
     }
 }
