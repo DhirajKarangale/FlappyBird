@@ -14,37 +14,7 @@ public class ADManager : MonoBehaviour
     private void Start()
     {
         Advertisement.Initialize("4177737", false);
-        ShowBannerAd();
         if (Random.Range(0, 3) == 2) Invoke("ShowInterstitialAd", 2f);
-    }
-
-    private void OnDestroy()
-    {
-        HideBanner();
-    }
-
-    public void HideBanner()
-    {
-        Advertisement.Banner.Hide();
-    }
-
-    private void ShowBannerAd()
-    {
-        if (Advertisement.IsReady("Banner_Android"))
-        {
-            Advertisement.Banner.SetPosition(BannerPosition.TOP_CENTER);
-            Advertisement.Banner.Show("Banner_Android");
-        }
-        else
-        {
-            StartCoroutine(RepeatShowBanner());
-        }
-    }
-
-    IEnumerator RepeatShowBanner()
-    {
-        yield return new WaitForSeconds(1);
-        ShowBannerAd();
     }
 
     public void ShowInterstitialAd()

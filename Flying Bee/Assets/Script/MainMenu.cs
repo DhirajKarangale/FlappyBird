@@ -63,6 +63,7 @@ public class MainMenu : MonoBehaviour
 
     public void MoreGamesButton()
     {
+        buttonSound.Play();
         Application.OpenURL("https://play.google.com/store/apps/developer?id=DK_Software");
     }
 
@@ -73,6 +74,7 @@ public class MainMenu : MonoBehaviour
 
     public void AboutButton()
     {
+        buttonSound.Play();
         isAboutPanel = true;
         mainPanel.SetActive(false);
         aboutPanel.SetActive(true);
@@ -80,16 +82,19 @@ public class MainMenu : MonoBehaviour
 
     public void LinkedInButton()
     {
+        buttonSound.Play();
         Application.OpenURL("https://www.linkedin.com/in/dhiraj-karangale-464ab91bb");
     }
 
     public void YoutubeButton()
     {
+        buttonSound.Play();
         Application.OpenURL("https://www.youtube.com/channel/UC_Dnn-QqlnrdYpKXycyzJDA");
     }
 
     public void CloseAboutButton()
     {
+        buttonSound.Play();
         isAboutPanel = false;
         aboutPanel.SetActive(false);
         mainPanel.SetActive(true);

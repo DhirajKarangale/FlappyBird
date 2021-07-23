@@ -74,7 +74,7 @@ public class Bird : MonoBehaviour
                 }
                 break;
             case State.Playing:
-                if (Input.GetKey(KeyCode.Escape))
+                if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     if (isPause) ResumeButton();
                     else PauseButton();

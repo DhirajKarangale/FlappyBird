@@ -42,7 +42,6 @@ public class Level : MonoBehaviour
         groundListUp = new List<Transform>();
         SpwanInitialGround();
         SetDifficuilty(Difficulty.Easy);
-        ADManager.instance.HideBanner();
     }
 
     private void Start()
