@@ -81,18 +81,7 @@ public class Bird : MonoBehaviour
                 }
                 pauseButtonObject.SetActive(true);
 
-                /* if ((Input.touchCount > 0) && EventSystem.current != null)
-                 {
-                     if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-                     {
-                         //isButtonPressed = true;
-                     }
-                     else
-                     {
-                         Jump();
-                     }
-                 }*/
-
+              
                 if (Input.GetMouseButtonDown(0) && !isHitPipe)
                 {
                     if (EventSystem.current.IsPointerOverGameObject())
