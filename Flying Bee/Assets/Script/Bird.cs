@@ -80,6 +80,19 @@ public class Bird : MonoBehaviour
                     else PauseButton();
                 }
                 pauseButtonObject.SetActive(true);
+
+                /* if ((Input.touchCount > 0) && EventSystem.current != null)
+                 {
+                     if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                     {
+                         //isButtonPressed = true;
+                     }
+                     else
+                     {
+                         Jump();
+                     }
+                 }*/
+
                 if (Input.GetMouseButtonDown(0) && !isHitPipe)
                 {
                     if (EventSystem.current.IsPointerOverGameObject())
@@ -187,6 +200,7 @@ public class Bird : MonoBehaviour
     public void PauseButton()
     {
         buttonSound.Play();
+        bgSound.Pause();
         scoreTextObject.SetActive(false);
         isPause = true;
         Time.timeScale = 0;
@@ -196,6 +210,7 @@ public class Bird : MonoBehaviour
     public void ResumeButton()
     {
         buttonSound.Play();
+        bgSound.Play();
         scoreTextObject.SetActive(true);
         isPause = false;
         Time.timeScale = 1;
