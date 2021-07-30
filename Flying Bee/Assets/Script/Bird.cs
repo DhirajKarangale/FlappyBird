@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using UnityEngine.EventSystems;
 
 
 public class Bird : MonoBehaviour
@@ -82,10 +81,8 @@ public class Bird : MonoBehaviour
                 pauseButtonObject.SetActive(true);
 
               
-                if (Input.GetMouseButtonDown(0) && !isHitPipe)
+                if (Input.GetMouseButtonDown(0) && !isHitPipe && !isPause)
                 {
-                    if (EventSystem.current.IsPointerOverGameObject())
-                        return;
                     Jump();
                 }
                 transform.eulerAngles = new Vector3(0, 0, birdRigidBody.velocity.y * 5f);
@@ -160,7 +157,6 @@ public class Bird : MonoBehaviour
         animator.enabled = false;
         if (onGameOver != null) onGameOver(this, EventArgs.Empty);
     }
-
 
 
     private void ShakeIt()

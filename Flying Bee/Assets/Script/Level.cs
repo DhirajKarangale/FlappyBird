@@ -18,6 +18,7 @@ public class Level : MonoBehaviour
     public Transform pipeUPObj;
     public Transform ground;
     public Transform groundUp;
+    
     public enum Difficulty
     {
         Easy,
@@ -184,12 +185,12 @@ public class Level : MonoBehaviour
                 pipeSpwanTimerMax = 3f;
                 break;
             case Difficulty.Hard:
-                gapSize = 2.5f;
-                pipeSpwanTimerMax = 2.5f;
+                gapSize = 2.2f;
+                pipeSpwanTimerMax = 2.2f;
                 break;
             case Difficulty.Impossible:
-                gapSize = 1.8f;
-                pipeSpwanTimerMax = 1.8f;
+                gapSize = 1.5f;
+                pipeSpwanTimerMax = 1.5f;
                 break;
         }
     }

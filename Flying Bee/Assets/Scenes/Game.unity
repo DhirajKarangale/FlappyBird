@@ -3797,6 +3797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 802872fdf4a6b134b8e4bfa99d99a9e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpEffect: {fileID: 0}
   WaitToStartPanel: {fileID: 1715463669}
   pauseButtonObject: {fileID: 1842226357}
   scoreTextObject: {fileID: 341457844}

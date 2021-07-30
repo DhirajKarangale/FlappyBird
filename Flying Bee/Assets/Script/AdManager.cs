@@ -14,7 +14,7 @@ public class ADManager : MonoBehaviour
     private void Start()
     {
         Advertisement.Initialize("4177737", false);
-        if (Random.Range(0, 3) == 2) Invoke("ShowInterstitialAd", 2f);
+        if (Random.Range(0, 3) == 1) Invoke("ShowInterstitialAd", 2f);
     }
 
     public void ShowInterstitialAd()

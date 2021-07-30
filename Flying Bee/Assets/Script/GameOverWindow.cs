@@ -27,7 +27,7 @@ public class GameOverWindow : MonoBehaviour
         scoreText.text = level.GetPipePassed().ToString();
         highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
         gameOverWindow.SetActive(true);
-        if (isShowAd && (Random.Range(0, 5) == 4))
+        if (isShowAd && (Random.Range(0, 4) == 1))
         {
             Invoke("ShowInterstitialAd", 1.5f);
             isShowAd = false;
